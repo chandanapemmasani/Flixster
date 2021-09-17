@@ -14,7 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var moviesTableview: UITableView!
     
-
+    let vals = ("v", 1)
     var movies = [[String:Any]]()
     
     override func viewDidLoad() {
@@ -64,6 +64,20 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.movieImg.af.setImage(withURL: posterUrl)
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexpath = moviesTableview.indexPath(for: cell)!
+        
+        let movie = movies[indexpath.row]
+        
+        let detailsViewController = segue.destination as! MovieDetailViewController
+        detailsViewController.movie = movie
+        
+        moviesTableview.deselectRow(at: indexpath, animated: true)
+        
     }
     
 }
